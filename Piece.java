@@ -71,9 +71,14 @@ public class Piece {
   public void remove() {
     this.is_removed = true;
   }
+<<<<<<< HEAD
   //all need check for if a space is occupied
   public List<Integer> getMoves() {
     List<Integer> moves = new ArrayList<Integer>();
+=======
+
+  public int[] getMoves() {
+>>>>>>> 5b766b36e442b7ccd11a23994264096b6ec55db0
     switch(this.getName) {
       Case PAWN:
         break;
@@ -145,12 +150,12 @@ public class Piece {
     return moves;
   }
 
-  public void move(int new_position) {
-    if (new_position > 63 || new_position < 0 || !ArrayUtils.contains(this.get_moves(), new_position)) {
+  public void move(int newPosition) {
+    if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
       throw new IllegalArgumentException("That is not a valid position to move to")
     }
     else {
-      this.position = new_position;
+      this.position = newPosition;
     }
   }
 
