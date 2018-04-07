@@ -2,7 +2,7 @@
 import java.util.*;
 import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 public class Piece {
 
@@ -15,9 +15,10 @@ public class Piece {
 		WHITE, BLACK;
 	}
 
-
+	Scanner sc = new Scanner(System.in);
 	private Type name;
 	private Color color;
+	private Boolean isRemoved;
 	private int position;
 	public static Boolean whiteOnTop;
 	public static Piece[][] board;
@@ -34,12 +35,13 @@ public class Piece {
 		this.position = pos;
 	}
 
-	public Piece(Piece copy) {
-		this.position = copy.position;
-		this.color = copy.color;
-		this.name = copy.name;	
+	public Piece(Piece piece) {
+		// TODO Auto-generated constructor stub
+		this.color = piece.color;
+		this.position = piece.position;
+		this.name = piece.name;
 	}
-	
+
 	public static void init_board(Boolean whiteOT, Piece[][] new_board) {
 		whiteOnTop=whiteOT;
 		board = new_board;
@@ -75,17 +77,39 @@ public class Piece {
 			{
 				if(this.getY() == 1)
 					moves.add(this.getX()+24);
-
-				moves.add(this.getX()+(8*(this.getY()+1)));
-				//need something for checking if there is a possible piece to take for a move
+				if((this.getY() +1 < 8) && board[this.getX()][this.getY()+1]==null)
+					moves.add(this.getX()+(8*(this.getY()+1)));
+				
+				if(this.getX()-1 >= 0 && this.getY() +1 < 8){ 
+					if((board[this.getX()-1][this.getY()+1] != null) && board[this.getX()-1][this.getY()+1].getColor()!=this.getColor()){
+						moves.add(this.getX()-1+(8*(this.getY()+1)));
+					}
+				}
+				
+				if(this.getX()+1 >= 0 && this.getY() +1 < 8){ 
+					if((board[this.getX()+1][this.getY()+1] != null) && board[this.getX()+1][this.getY()+1].getColor()!=this.getColor()){
+						moves.add(this.getX()+1+(8*(this.getY()+1)));
+					}
+				}
+				
 			}
 			else
 			{
-				System.out.println(this.getX());
 				if(this.getY() == 6)
 					moves.add(this.getX()+32);
-
-				moves.add(this.getX()+(8*(this.getY()-1)));
+				if((this.getY() -1 >= 0) && board[this.getX()][this.getY()-1]==null)
+					moves.add(this.getX()+(8*(this.getY()-1)));
+				
+				if(this.getX()-1 >= 0 && this.getY() -1 >= 0){ 
+					if((board[this.getX()-1][this.getY()-1] != null) && board[this.getX()-1][this.getY()-1].getColor()!=this.getColor()){
+						moves.add(this.getX()-1+(8*(this.getY()-1)));
+					}
+				}
+				if(this.getX()+1 >= 0 && this.getY() -1 >= 0){ 
+					if((board[this.getX()+1][this.getY()-1] != null) && board[this.getX()+1][this.getY()-1].getColor()!=this.getColor()){
+						moves.add(this.getX()+1+(8*(this.getY()-1)));
+					}
+				}
 			}
 			break;
 		case ROOK:
@@ -167,23 +191,37 @@ public class Piece {
 						if(x_change+this.getX() < 8)
 						{
 							if(y_change+this.getY() < 8)
-							{moves.add((this.getX()+x_change)+(8*(this.getY()+y_change)));}
+							{
+								if((board[this.getX()+x_change][this.getY()+y_change]==null) || board[this.getX()+x_change][this.getY()+y_change].getColor() != this.getColor())
+									moves.add((this.getX()+x_change)+(8*(this.getY()+y_change)));
+							}
+							
 							if(this.getY()-y_change >= 0)
-							{moves.add((this.getX()+x_change)+(8*(this.getY()-y_change)));}
+							{
+								if((board[this.getX()+x_change][this.getY()-y_change]==null) || board[this.getX()+x_change][this.getY()-y_change].getColor() != this.getColor())
+									moves.add((this.getX()+x_change)+(8*(this.getY()-y_change)));
+							}
 						}
+						
 						if(this.getX()-x_change >= 0)
 						{
 							if(y_change+this.getY() < 8)
-							{moves.add((this.getX()-x_change)+(8*(this.getY()+y_change)));}
+							{
+								if((board[this.getX()-x_change][this.getY()+y_change]==null) || board[this.getX()-x_change][this.getY()+y_change].getColor() != this.getColor())
+									moves.add((this.getX()-x_change)+(8*(this.getY()+y_change)));
+							}
+							
 							if(this.getY()-y_change >= 0)
-							{moves.add((this.getX()-x_change)+(8*(this.getY()-y_change)));}
+							{
+								if((board[this.getX()-x_change][this.getY()-y_change]==null) || board[this.getX()-x_change][this.getY()-y_change].getColor() != this.getColor())
+									moves.add((this.getX()-x_change)+(8*(this.getY()-y_change)));
+							}
 						}
 					}
 				}
 			}
 			break;
 		case QUEEN:
-			//Get horizontal moves
 			i = this.getX();
 
 			while( ++i < SIZE && (board[i][this.getY()] == null))
@@ -250,7 +288,6 @@ public class Piece {
 				moves.add(this.getX() - i + SIZE * (this.getY() - i));
 
 			break;
-			
 		case KING:
 			for(i= -1; i<=1;i++)
 			{
@@ -258,7 +295,9 @@ public class Piece {
 				{
 					if(i!=0||j!=0)
 					{
-						moves.add((this.getX()+i)+(8*(this.getY()+j)));
+						if ((this.getX() +  i < 8 && this.getY() +j < 8) && (this.getX() +  i >= 0 && this.getY() +j >= 0) )
+							if ((board[this.getX()+i][(this.getY()+j)] == null)||(board[this.getX()+i][(this.getY()+j)].getColor()!=this.getColor()))
+								moves.add((this.getX()+i)+(8*(this.getY()+j)));
 					}
 				}
 			}
@@ -266,7 +305,7 @@ public class Piece {
 		}
 		return moves;
 	}
-	
+
 	public boolean validMove(int newPos) {
 		if (this.getMoves().contains(newPos))
 		{
@@ -282,6 +321,41 @@ public class Piece {
 			board[this.getX()][this.getY()] = null;
 			this.position = new_pos;
 		}
+		if(this.getName()==Type.PAWN)
+		{
+			if (((whiteOnTop && this.color == Color.WHITE)||(!whiteOnTop && this.color == Color.BLACK)))
+			{
+				if(this.getY()==7)
+				{
+					System.out.println("Please enter a number: 1 = Queen, 2 = Rook, 3 = Bishop, 4 = Knight");
+					int newPiece= sc.nextInt();
+					if (newPiece==1)
+						this.name=Type.QUEEN;
+					else if (newPiece==2)
+						this.name=Type.ROOK;
+					else if (newPiece==3)
+						this.name=Type.BISHOP;
+					else if (newPiece==4)
+						this.name=Type.KNIGHT;
+				}
+			}
+			else
+			{
+				if(this.getY()==0)
+				{
+					System.out.println("Please enter a number: 1 = Queen, 2 = Rook, 3 = Bishop, 4 = Knight");
+					int newPiece= sc.nextInt();
+					if (newPiece==1)
+						this.name=Type.QUEEN;
+					else if (newPiece==2)
+						this.name=Type.ROOK;
+					else if (newPiece==3)
+						this.name=Type.BISHOP;
+					else if (newPiece==4)
+						this.name=Type.KNIGHT;
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
@@ -290,18 +364,14 @@ public class Piece {
 		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 28);
 		Piece ourKnight = new Piece(Type.KING, Color.WHITE, 28);
 		Piece ourRook = new Piece(Type.ROOK, Color.WHITE, 28);
-		Piece ourBishop = new Piece(Type.BISHOP, Color.WHITE, 28);
 
-		//Piece additionalRook = new Piece(Type.ROOK, Color.WHITE, 20);
+		Piece additionalRook = new Piece(Type.ROOK, Color.WHITE, 20);
 		List <Integer> rookList = ourRook.getMoves();
-		List <Integer> bishopList = ourBishop.getMoves();
-		List <Integer> queenList = ourQueen.getMoves();
-		List <Integer> knightList = ourKnight.getMoves();
-		Collections.sort(knightList);
-		System.out.println("Queen moves: " + queenList);
-		System.out.println("Knight moves:" + knightList);
+		List <Integer> list = ourQueen.getMoves();
+		List <Integer> kList = ourKnight.getMoves();
+		Collections.sort(kList);
+		System.out.println("Knight moves:"+kList);
 		System.out.println("Rook moves: " + rookList);
-		System.out.println("Bishop moves: " + bishopList);
 
 		for(int i=0; i<8; i++) {
 			System.out.print("[");
@@ -318,5 +388,4 @@ public class Piece {
 		}
 		System.out.println(board);
 	}
-
 }
