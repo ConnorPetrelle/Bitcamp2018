@@ -18,7 +18,6 @@ public class Piece {
 	Scanner sc = new Scanner(System.in);
 	private Type name;
 	private Color color;
-	private Boolean isRemoved;
 	private int position;
 	public static Boolean whiteOnTop;
 	public static Piece[][] board;
