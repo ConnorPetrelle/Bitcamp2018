@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Piece {
 
 	final int SIZE = 8;
+
 	public enum Type {
 		PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
 	}
@@ -43,6 +44,18 @@ public class Piece {
 		board = new_board;
 	}
 
+	public boolean validMove(int to_pos){
+		if(board[to_pos%8][to_pos/8]==null)
+			return true;
+		else if(board[to_pos%8][to_pos/8].getColor() != this.getColor())
+			return true;
+		return false;
+	}
+
+	public boolean validMovePawn(int to_pos){
+		return true;
+	}
+
 	public Type getName() {
 		return this.name;
 	}
@@ -67,8 +80,6 @@ public class Piece {
 		return this.isRemoved;
 	}
 
-
-
 	public void remove() {
 		this.isRemoved = true;
 	}
@@ -81,6 +92,19 @@ public class Piece {
 
 		switch(this.getName()) {
 		case PAWN:
+			if ((whiteOnTop && this.color == Color.WHITE)||(!whiteOnTop && this.color == Color.BLACK))
+			{
+				if(this.getY() == 1)
+					moves.add(this.getX()+16);
+				moves.add(this.getX()+(8*(this.getY()+1)));
+				//need something for checking if there is a possible piece to take for a move
+			}
+			else
+			{
+				if(this.getY() == 7)
+					moves.add(this.getX()-16);
+				moves.add(this.getX()+(8*(this.getY()-11)));
+			}
 			break;
 		case ROOK:
 			for(int i = 0; i <= 7; i++)
@@ -92,7 +116,8 @@ public class Piece {
 			}
 			break;
 		case BISHOP:
-			for(int i= 1; i <= 7; i++)
+			int i= this.getX();
+			while(i-- >=0)
 			{
 				if (this.getX()-i >= 0 && this.getY() - i >= 0)
 				{
@@ -146,7 +171,8 @@ public class Piece {
 					moves.add(this.getX()+(8*i));
 			}
 
-			for(int i= 1; i <= 7; i++)
+			i = 1;
+			while(i <= 7)
 			{
 				if (this.getX()-i >= 0 && this.getY() - i >= 0)
 				{
@@ -164,6 +190,7 @@ public class Piece {
 				{
 					moves.add((this.getX()+i)+(8*(this.getY()+i)));
 				}
+				i++;
 			}
 			break;
 		case KING:
@@ -196,11 +223,11 @@ public class Piece {
 
 	public static void main(String[] args) {
 		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 63);
-		Piece ourKnight = new Piece(Type.KING, Color.WHITE, 28);
+		Piece ourKing = new Piece(Type.KING, Color.WHITE, 28);
 		List <Integer> list = ourQueen.getMoves();
-		List <Integer> kList = ourKnight.getMoves();
+		List <Integer> kList = ourKing.getMoves();
 		Collections.sort(kList);
-		System.out.println("Knight moves:"+kList);
+		System.out.println("King moves:"+kList);
 
 		for(int i=0; i<8; i++) {
 			System.out.print("[");
