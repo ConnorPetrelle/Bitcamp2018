@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Piece {
 
 	final int SIZE = 8;
+	
 	public enum Type {
 		PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
 	}
@@ -43,13 +44,6 @@ public class Piece {
 		board = new_board;
 	}
 	
-	public boolean validMove(int to_pos){
-		if(board[to_pos%8][to_pos/8]==null)
-			return true;
-		else if(board[to_pos%8][to_pos/8].getColor() != this.getColor())
-			return true;
-		return false;
-	}
 	
 	public boolean validMovePawn(int to_pos){
 		return true;
@@ -207,8 +201,22 @@ public class Piece {
 		}
 		return moves;
 	}
-
-
+	
+	public boolean validMove(int newPos)
+	{
+		if (this.getMoves().contains(newPos))
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public void move(int new_pos)
+	{
+		if (validMove(new_pos))
+			board[new_pos%8][new_pos/8]= this;
+	}
 	/*
 	public void move(int newPosition) {
 		if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
