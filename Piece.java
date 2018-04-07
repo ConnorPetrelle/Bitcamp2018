@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-//package bitcamp2018;
 
 import java.util.*;
 import java.lang.Object;
@@ -80,6 +78,21 @@ public class Piece {
 		int i;
 		switch(this.getName()) {
 		case PAWN:
+			if ((whiteOnTop && this.color == Color.WHITE)||(!whiteOnTop && this.color == Color.BLACK))
+			{
+				if(this.getY() == 1)
+					moves.add(this.getX()+24);
+
+				moves.add(this.getX()+(8*(this.getY()+1)));
+				//need something for checking if there is a possible piece to take for a move
+			}
+			else
+			{
+				if(this.getY() == 7)
+					moves.add(this.getX()-24);
+					
+				moves.add(this.getX()+(8*(this.getY()-11)));
+			}
 		break;
 		case ROOK:
 			//Get horizontal moves
