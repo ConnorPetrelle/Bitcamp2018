@@ -1,9 +1,10 @@
-<<<<<<< HEAD
+import java.util.*;
 import java.lang.System.out;
+import java.lang.Object;
 import java.lang.IllegalArgumentException;
 
+final int SIZE = 8;
 public class Piece {
-
 
   enum Type {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
@@ -13,92 +14,57 @@ public class Piece {
   private Boolean is_removed;
   private int x_coord, y_coord;
 
-  public Piece(TYPE name, String color, int x, int y) {
+  public Piece(TYPE name, String color, int pos) {
 
     if(x < 0 || x > 7 || y < 0 || y > 7) {
       throw new IllegalArgumentException("invalid coordinates");
     }
 
-    this.name = ;
+    this.name = name;
     this.color = color;
-    this.x_coord = x;
-    this.y_coord = y;
+    this.position = pos;
     this.is_removed = false;
 
-    public int getXCoord() {
-      return this.x_coord;
+    public int getX() {
+      return this.position % SIZE;
     }
 
-    public int getYCoord() {
-      return this.y_coord;
+    public int getY() {
+      return this.position / SIZE;
+    }
+
+    public int getPos() {
+      return this.position;
     }
 
     public String getName() {
       return this.name;
     }
 
+    public Boolean isPresent() {
+      return !this.is_removed
+    }
+
   }
 
   public void remove() {
-    is_removed = true;
+    this.is_removed = true;
   }
 
-  public
+  public int[] get_moves() {
+
+  }
+
+  public void move(int new_position) {
+    if (new_position > 63 || new_position < 0 || !ArrayUtils.contains(this.get_moves(), new_position)) {
+      throw new IllegalArgumentException("That is not a valid position")
+    }
+    else  {
+      this.position = new_position
+    }
+  }
+
 
   public static void main(String[] args) {
     System.out.println("Hello world");
   }
-
-=======
-import java.util.*
-
-
-pulic boolean isValid(int new_x, int new_y)
-{
-  if (this.name.equals("Rook"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-    else if (this.x==new_x && this.y!=new_y)
-      return true;
-    else if (this.x!=new_x && this.y==new_y)
-      return true;
-    else
-      return false;
-  }
-  else if (this.name.equals("Pawn"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-  }
-  else if (this.name.equals("Bishop"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-  }
-  else if (this.name.equals("Queen"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-  }
-  else if (this.name.equals("King"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-  }
-  else if (this.name.equals("Knight"))
-  {
-    if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7)
-      return false;
-  }
-}
-
-public void move(int new_x, int new_y)
-{
-  if isValid(new_x, new_y)
-  {
-    this.x = new_x;
-    this.y = new_y;
-  }
->>>>>>> cfbf4529cb99ed2a7b3701869f1596d2c6be2249
-}
