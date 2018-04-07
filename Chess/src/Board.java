@@ -11,15 +11,15 @@ public class Board extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	final static int SQUARE_WIDTH = 65;
-	public final static int SCREEN_WIDTH = 1000;		//width of the JFrame
-	public final static int SCREEN_HEIGHT = 700;		//height of the JFrame
+	public final static int SCREEN_WIDTH = 1400;		//width of the JFrame
+	public final static int SCREEN_HEIGHT = 750;		//height of the JFrame
 	private final int startingLocX = SCREEN_WIDTH / 2 - 4 * SQUARE_WIDTH;
 	private final int startingLocY = SCREEN_HEIGHT / 2 - 4 * SQUARE_WIDTH;
 	private int pieceSelectedX, pieceSelectedY;
 	private int offsetX = 8, offsetY = 28; //weird offsets that came in for no reason
 	private boolean whitesMove;
 
-	public Image blackPawn, whitePawn;
+	private Image blackPawn, whitePawn;
 	private Image blackKnight,  whiteKnight;
 	private Image blackBishop, whiteBishop;
 	private Image blackRook, whiteRook;
@@ -55,10 +55,10 @@ public class Board extends JPanel {
 			}
 
 			//place queens
-			board[4][7 * i] = new Piece(Piece.Type.QUEEN, color, 4 + 56 * i);
+			board[3][7 * i] = new Piece(Piece.Type.QUEEN, color, 3 + 56 * i);
 
 			//place kings
-			board[3][7 * i] = new Piece(Piece.Type.KING, color, 3 + 56 * i);
+			board[4][7 * i] = new Piece(Piece.Type.KING, color, 4 + 56 * i);
 
 			//place rooks
 			board[0][7 * i] = new Piece(Piece.Type.ROOK, color, 56 * i);
@@ -183,9 +183,9 @@ public class Board extends JPanel {
 				if (pieceSelectedX == i && pieceSelectedY == j)
 					g2d.setColor(mediumBrown);
 				else if ((i + j) % 2 == 0)
-					g2d.setColor(lightBrown);
-				else
 					g2d.setColor(darkBrown);
+				else
+					g2d.setColor(lightBrown);
 
 				g2d.fillRect(startingLocX + i * SQUARE_WIDTH, startingLocY + j * SQUARE_WIDTH,
 						SQUARE_WIDTH, SQUARE_WIDTH);
