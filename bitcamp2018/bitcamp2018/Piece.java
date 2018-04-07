@@ -37,12 +37,12 @@ public class Piece {
 		this.position = pos;
 		this.isRemoved = false;
 	}
-
+	
 	public static void init_board(Boolean whiteOT, Piece[][] new_board) {
 		whiteOnTop=whiteOT;
 		board = new_board;
 	}
-
+	
 	public Type getName() {
 		return this.name;
 	}
@@ -120,7 +120,7 @@ public class Piece {
 					if(x_change!=y_change)
 					{
 						if(x_change+this.getX() < 8)
-						{
+						{	
 							if(y_change+this.getY() < 8)
 								{moves.add((this.getX()+x_change)+(8*(this.getY()+y_change)));}
 							if(this.getY()-y_change >= 0)
@@ -193,7 +193,7 @@ public class Piece {
 		}
 	}
 	 */
-
+	
 	public static void main(String[] args) {
 		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 63);
 		Piece ourKnight = new Piece(Type.KING, Color.WHITE, 28);
@@ -201,7 +201,7 @@ public class Piece {
 		List <Integer> kList = ourKnight.getMoves();
 		Collections.sort(kList);
 		System.out.println("Knight moves:"+kList);
-
+		
 		for(int i=0; i<8; i++) {
 			System.out.print("[");
 			for(int j=0; j<8; j++) {
