@@ -159,6 +159,18 @@ public class Board extends JPanel {
 
 	}
 
+	public Board(Board copy) {
+		super();
+		for (int i=0; i<8; i++) {
+			for (int j=0; j<8; j++) {
+				if (copy.board[i][j] != null)
+					this.board[i][j] = new Piece(copy.board[i][j]);
+				else
+					this.board[i][j] = null;
+			}
+		}
+	}
+
 	@Override 
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -270,13 +282,11 @@ public class Board extends JPanel {
 				if (board[pieceSelectedX][pieceSelectedY].validMove(xVal + 8 * yVal)) {
 					if ((whitesMove && board[pieceSelectedX][pieceSelectedY].getColor() == Piece.Color.WHITE) || 
 							(!whitesMove && board[pieceSelectedX][pieceSelectedY].getColor() == Piece.Color.BLACK)) {
-						
+
 						board[pieceSelectedX][pieceSelectedY].move(xVal + 8 * yVal);
 						whitesMove = !whitesMove;			//change this when adding AI
 						System.out.println("valid move");
 					}
-				} else {
-					System.out.println("invalid move");
 				}
 
 				pieceSelectedX = -1;

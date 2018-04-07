@@ -18,7 +18,6 @@ public class Piece {
 
 	private Type name;
 	private Color color;
-	private Boolean isRemoved;
 	private int position;
 	public static Boolean whiteOnTop;
 	public static Piece[][] board;
@@ -33,9 +32,14 @@ public class Piece {
 		this.name = name;
 		this.color = color;
 		this.position = pos;
-		this.isRemoved = false;
 	}
 
+	public Piece(Piece copy) {
+		this.position = copy.position;
+		this.color = copy.color;
+		this.name = copy.name;	
+	}
+	
 	public static void init_board(Boolean whiteOT, Piece[][] new_board) {
 		whiteOnTop=whiteOT;
 		board = new_board;
@@ -59,16 +63,6 @@ public class Piece {
 
 	public int getPosition() {
 		return this.position;
-	}
-
-	public Boolean isRemoved() {
-		return this.isRemoved;
-	}
-
-
-
-	public void remove() {
-		this.isRemoved = true;
 	}
 
 	//all need check for if a space is occupied
@@ -272,11 +266,7 @@ public class Piece {
 		}
 		return moves;
 	}
-
-	public boolean validMovePawn(int to_pos) {
-		return true;
-	}
-
+	
 	public boolean validMove(int newPos) {
 		if (this.getMoves().contains(newPos))
 		{
@@ -328,4 +318,5 @@ public class Piece {
 		}
 		System.out.println(board);
 	}
+
 }
