@@ -14,7 +14,7 @@ public class Piece {
   private Boolean is_removed;
   private int x_coord, y_coord;
 
-  public Piece(TYPE name, String color, int pos) {
+  public Piece(Type name, String color, int pos) {
 
     if(x < 0 || x > 7 || y < 0 || y > 7) {
       throw new IllegalArgumentException("invalid coordinates");
@@ -37,7 +37,7 @@ public class Piece {
       return this.position;
     }
 
-    public String getName() {
+    public Type getName() {
       return this.name;
     }
 
@@ -52,18 +52,32 @@ public class Piece {
   }
 
   public int[] get_moves() {
-
+    switch(this.getName) {
+      Case PAWN:
+        break;
+      Case KNIGHT:
+        break;
+      Case ROOK:
+        break;
+      Case BISHOP:
+        break;
+      Case KNIGHT:
+        break;
+      Case QUEEN:
+        break;
+      Case KING:
+        break;
+    }
   }
 
   public void move(int new_position) {
     if (new_position > 63 || new_position < 0 || !ArrayUtils.contains(this.get_moves(), new_position)) {
-      throw new IllegalArgumentException("That is not a valid position")
+      throw new IllegalArgumentException("That is not a valid position to move to")
     }
-    else  {
-      this.position = new_position
+    else {
+      this.position = new_position;
     }
   }
-
 
   public static void main(String[] args) {
     System.out.println("Hello world");
