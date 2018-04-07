@@ -8,6 +8,7 @@ public class MoveListener implements MouseListener{
 	public MoveListener (Board board) {
 		this.board = board;
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub

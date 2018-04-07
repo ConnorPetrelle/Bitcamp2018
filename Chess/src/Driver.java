@@ -1,13 +1,19 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
-public class Driver {
+public class Driver extends TimerTask{
+	
+	private static JFrame frame;
+	private static Timer timer;
+	private static TimerTask task;
 	
 	public static void main(String[] args) {
 		
-				JFrame frame = new JFrame("Chess");
+				frame = new JFrame("Chess");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		        frame.setSize(500, 2000);
@@ -21,13 +27,16 @@ public class Driver {
 		        frame.add(board);
 		        frame.setVisible(true);
 		        
-		        
-		        while(!board.checkmate()) {
-		        	//add a timer to slow this down?
-		        	frame.repaint();
-		        }
-		        
+		        task = new Driver();
+		        timer = new Timer();
+		        timer.scheduleAtFixedRate(task, 0, 15);
 		    
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		frame.repaint();
 	}
 
 }
