@@ -76,7 +76,8 @@ public class Piece {
 			if (((whiteOnTop && this.color == Color.WHITE)||(!whiteOnTop && this.color == Color.BLACK)))
 			{
 				if(this.getY() == 1)
-					moves.add(this.getX()+24);
+					if(board[this.getX()][3]==null)
+						moves.add(this.getX()+24);
 				if((this.getY() +1 < 8) && board[this.getX()][this.getY()+1]==null)
 					moves.add(this.getX()+(8*(this.getY()+1)));
 				
@@ -86,7 +87,7 @@ public class Piece {
 					}
 				}
 				
-				if(this.getX()+1 >= 0 && this.getY() +1 < 8){ 
+				if(this.getX()+1 < 8 && this.getY() +1 < 8){ 
 					if((board[this.getX()+1][this.getY()+1] != null) && board[this.getX()+1][this.getY()+1].getColor()!=this.getColor()){
 						moves.add(this.getX()+1+(8*(this.getY()+1)));
 					}
@@ -96,7 +97,8 @@ public class Piece {
 			else
 			{
 				if(this.getY() == 6)
-					moves.add(this.getX()+32);
+					if(board[this.getX()][4]==null)
+						moves.add(this.getX()+32);
 				if((this.getY() -1 >= 0) && board[this.getX()][this.getY()-1]==null)
 					moves.add(this.getX()+(8*(this.getY()-1)));
 				
@@ -105,7 +107,7 @@ public class Piece {
 						moves.add(this.getX()-1+(8*(this.getY()-1)));
 					}
 				}
-				if(this.getX()+1 >= 0 && this.getY() -1 >= 0){ 
+				if(this.getX()+1 < 8 && this.getY() -1 >= 0){ 
 					if((board[this.getX()+1][this.getY()-1] != null) && board[this.getX()+1][this.getY()-1].getColor()!=this.getColor()){
 						moves.add(this.getX()+1+(8*(this.getY()-1)));
 					}

@@ -25,7 +25,7 @@ public class Board extends JPanel {
 	private Image blackRook, whiteRook;
 	private Image blackQueen, whiteQueen;
 	private Image blackKing, whiteKing;
-	final private String path = "C:\\Users\\phill\\Pictures\\Chess\\";
+	final private String path = "/home/jojo/Bitcamp2018/Pieces/";
 
 	final Color lightBrown = new Color(139,69,19);
 	final Color mediumBrown = new Color(180, 121, 75);
