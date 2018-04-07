@@ -1,5 +1,3 @@
-package bitcamp2018;
-
 import java.util.*;
 import java.lang.Object;
 import java.lang.IllegalArgumentException;
@@ -217,16 +215,7 @@ public class Piece {
 		if (validMove(new_pos))
 			board[new_pos%8][new_pos/8]= this;
 	}
-	/*
-	public void move(int newPosition) {
-		if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
-			throw new IllegalArgumentException("That is not a valid position to move to")
-		}
-		else {
-			this.position = newPosition;
-		}
-	}
-	 */
+
 
 	public static void main(String[] args) {
 		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 63);
