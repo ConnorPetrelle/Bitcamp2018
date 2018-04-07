@@ -1,164 +1,171 @@
 import java.util.*;
-import java.lang.System.out;
 import java.lang.Object;
 import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
 
-final int SIZE = 8;
+
 public class Piece {
 
+	final int SIZE = 8;
+	public enum Type {
+		PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
+	}
 
-  public enum Type {
-    PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
-  }
-
-  public enum Color {
-    WHITE, BLACK;
-  }
+	public enum Color {
+		WHITE, BLACK;
+	}
 
 
-  private Type name;
-  private Color color;
-  private Boolean is_removed;
-  private int position;
-  private Boolean whiteOnTop;
+	private Type name;
+	private Color color;
+	private Boolean isRemoved;
+	private int position;
+	private Boolean whiteOnTop;
 
-  public Piece(Type name, Color color, int pos) {
+	public Piece(Type name, Color color, int pos) {
+		int x = pos % 8;
+		int y = pos / 8;
+		if(x < 0 || x > 7 || y < 0 || y > 7) {
+			throw new IllegalArgumentException("invalid coordinates");
+		}
 
-    if(x < 0 || x > 7 || y < 0 || y > 7) {
-      throw new IllegalArgumentException("invalid coordinates");
-    }
+		this.name = name;
+		this.color = color;
+		this.position = pos;
+		this.isRemoved = false;
+	}
 
-    this.name = name;
-    this.color = color;
-    this.position = pos;
-    this.isRemoved = false;
+	public Type getName() {
+		return this.name;
+	}
 
-    public Type getName() {
-      return this.name;
-    }
+	public Color getColor() {
+		return this.color;
+	}
 
-    public Color getColor() {
-      return this.color;
-    }
+	public int getX() {
+		return this.position % SIZE;
+	}
 
-    public int getX() {
-      return this.position % SIZE;
-    }
+	public int getY() {
+		return this.position / SIZE;
+	}
 
-    public int getY() {
-      return this.position / SIZE;
-    }
+	public int getPosition() {
+		return this.position;
+	}
 
-    public int getPosition() {
-      return this.position;
-    }
+	public Boolean isRemoved() {
+		return this.isRemoved;
+	}
 
-    public Type getName() {
-      return this.name;
-    }
 
-    public Boolean isRemoved() {
-      return this.isRemoved
-    }
 
-    public Color getColor() {
-      return this.color;
-    }
+	public void remove() {
+		this.isRemoved = true;
+	}
 
-  }
+	//all need check for if a space is occupied
+	public List<Integer> getMoves() {
+		List<Integer> moves = new ArrayList<Integer>();
 
-  public void remove() {
-    this.is_removed = true;
-  }
-<<<<<<< HEAD
-  //all need check for if a space is occupied
-  public List<Integer> getMoves() {
-    List<Integer> moves = new ArrayList<Integer>();
-=======
 
-  public int[] getMoves() {
->>>>>>> 5b766b36e442b7ccd11a23994264096b6ec55db0
-    switch(this.getName) {
-      Case PAWN:
-        break;
-      Case ROOK:
-        for(int i = 0; i <= 7; i++)
-        {
-          if (this.getX() != i)
-            moves.push(i+(8*this.getY()));
-          if (this.getY() != i)
-            moves.push(this.getX()+(8*i));
-        }
-        break;
-      Case BISHOP:
-        for(int i= 1; i < 7; i++)
-        {
-          if (this.getX()-i >= 0 && this.getY() - i >= 0)
-            {
-              moves.push((this.getX()-i)+(8*(this.getY()-i)));
-            }
-          if (this.getX()+i < 8 && this.getY() - i >= 0)
-            {
-              moves.push((this.getX()+i)+(8*(this.getY()-i)));
-            }
-          if (this.getX()-i >= 0 && this.getY() + i < 8)
-            {
-              moves.push((this.getX()-i)+(8*(this.getY()+i)));
-            }
-          if (this.getX()+i < 8 && this.getY() + i < 8)
-            {
-              moves.push((this.getX()+i)+(8*(this.getY()+i)));
-            }
-        }
-        break;
-      Case KNIGHT:
-        break;
-      Case QUEEN:
-        for(int i = 0; i <= 7; i++)
-        {
-          if (this.getX() != i)
-            moves.push(i+(8*this.getY()));
-          if (this.getY() != i)
-            moves.push(this.getX()+(8*i));
-        }
 
-        for(int i= 1; i < 7; i++)
-        {
-          if (this.getX()-i >= 0 && this.getY() - i >= 0)
-            {
-              moves.push((this.getX()-i)+(8*(this.getY()-i)));
-            }
-          if (this.getX()+i < 8 && this.getY() - i >= 0)
-            {
-              moves.push((this.getX()+i)+(8*(this.getY()-i)));
-            }
-          if (this.getX()-i >= 0 && this.getY() + i < 8)
-            {
-              moves.push((this.getX()-i)+(8*(this.getY()+i)));
-            }
-          if (this.getX()+i < 8 && this.getY() + i < 8)
-            {
-              moves.push((this.getX()+i)+(8*(this.getY()+i)));
-            }
-        }
-        break;
-      Case KING:
+		switch(this.getName()) {
+		case PAWN:
+			break;
+		case ROOK:
+			for(int i = 0; i <= 7; i++)
+			{
+				if (this.getX() != i)
+					moves.add(i+(8*this.getY()));
+				if (this.getY() != i)
+					moves.add(this.getX()+(8*i));
+			}
+			break;
+		case BISHOP:
+			for(int i= 1; i <= 7; i++)
+			{
+				if (this.getX()-i >= 0 && this.getY() - i >= 0)
+				{
+					moves.add((this.getX()-i)+(8*(this.getY()-i)));
+				}
+				if (this.getX()+i < 8 && this.getY() - i >= 0)
+				{
+					moves.add((this.getX()+i)+(8*(this.getY()-i)));
+				}
+				if (this.getX()-i >= 0 && this.getY() + i < 8)
+				{
+					moves.add((this.getX()-i)+(8*(this.getY()+i)));
+				}
+				if (this.getX()+i < 8 && this.getY() + i < 8)
+				{
+					moves.add((this.getX()+i)+(8*(this.getY()+i)));
+				}
+			}
+			break;
+		case KNIGHT:
+			break;
+		case QUEEN:
+			for(int i = 0; i <= 7; i++)
+			{
+				if (this.getX() != i)
+					moves.add(i+(8*this.getY()));
+				if (this.getY() != i)
+					moves.add(this.getX()+(8*i));
+			}
 
-        break;
-    }
-    return moves;
-  }
+			for(int i= 1; i <= 7; i++)
+			{
+				if (this.getX()-i >= 0 && this.getY() - i >= 0)
+				{
+					moves.add((this.getX()-i)+(8*(this.getY()-i)));
+				}
+				if (this.getX()+i < 8 && this.getY() - i >= 0)
+				{
+					moves.add((this.getX()+i)+(8*(this.getY()-i)));
+				}
+				if (this.getX()-i >= 0 && this.getY() + i < 8)
+				{
+					moves.add((this.getX()-i)+(8*(this.getY()+i)));
+				}
+				if (this.getX()+i < 8 && this.getY() + i < 8)
+				{
+					moves.add((this.getX()+i)+(8*(this.getY()+i)));
+				}
+			}
+			break;
+		case KING:
 
-  public void move(int newPosition) {
-    if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
-      throw new IllegalArgumentException("That is not a valid position to move to")
-    }
-    else {
-      this.position = newPosition;
-    }
-  }
+			break;
+		}
+		return moves;
+	}
 
-  public static void main(String[] args) {
-    Piece ourQueen = new Piece(QUEEN, WHITE, 28)
-  }
+
+	/*
+	public void move(int newPosition) {
+		if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
+			throw new IllegalArgumentException("That is not a valid position to move to")
+		}
+		else {
+			this.position = newPosition;
+		}
+	}
+	 */
+	
+	public static void main(String[] args) {
+		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 63);
+		List <Integer> list = ourQueen.getMoves();
+		Collections.sort(list);
+		System.out.println(list);
+		
+		for(int i=0; i<8; i++) {
+			System.out.print("[");
+			for(int j=0; j<8; j++) {
+				System.out.print(i * 8 + j + "\t");
+			}
+			System.out.println("]\n");
+		}
+	}
+}
