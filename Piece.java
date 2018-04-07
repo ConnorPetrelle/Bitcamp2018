@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //package bitcamp2018;
 
 import java.util.*;
@@ -206,17 +207,23 @@ public class Piece {
 		return moves;
 	}
 
+  public boolean validMovePawn(int to_pos) {
+    return true;
+  }
 
-	/*
-	public void move(int newPosition) {
-		if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
-			throw new IllegalArgumentException("That is not a valid position to move to")
-		}
-		else {
-			this.position = newPosition;
-		}
-	}
-	 */
+  public boolean validMove(int newPos) {
+    if (this.getMoves().contains(newPos))
+    {
+      return true;
+    }
+    else
+      return false;
+  }
+
+  public void move(int new_pos) {
+    if (validMove(new_pos))
+      board[new_pos%8][new_pos/8]= this;
+  }
 
 	public static void main(String[] args) {
 
