@@ -61,7 +61,7 @@ public class Piece {
     this.is_removed = true;
   }
 
-  public int[] get_moves() {
+  public int[] getMoves() {
     switch(this.getName) {
       Case PAWN:
         break;
@@ -80,12 +80,12 @@ public class Piece {
     }
   }
 
-  public void move(int new_position) {
-    if (new_position > 63 || new_position < 0 || !ArrayUtils.contains(this.get_moves(), new_position)) {
+  public void move(int newPosition) {
+    if (newPosition > 63 || newPosition < 0 || !ArrayUtils.contains(this.getMoves(), newPosition)) {
       throw new IllegalArgumentException("That is not a valid position to move to")
     }
     else {
-      this.position = new_position;
+      this.position = newPosition;
     }
   }
 
