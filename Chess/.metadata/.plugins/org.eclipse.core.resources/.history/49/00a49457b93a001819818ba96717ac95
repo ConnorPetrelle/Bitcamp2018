@@ -2,7 +2,7 @@
 import java.util.*;
 import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Piece {
 
@@ -15,7 +15,7 @@ public class Piece {
 		WHITE, BLACK;
 	}
 
-	Scanner sc = new Scanner(System.in);
+
 	private Type name;
 	private Color color;
 	private Boolean isRemoved;
@@ -330,34 +330,12 @@ public class Piece {
 			if (((whiteOnTop && this.color == Color.WHITE)||(!whiteOnTop && this.color == Color.BLACK)))
 			{
 				if(this.getY()==7)
-				{
-					System.out.println("Please enter a number: 1 = Queen, 2 = Rook, 3 = Bishop, 4 = Knight");
-					int newPiece= sc.nextInt();
-					if (newPiece==1)
-						this.name=Type.QUEEN;
-					else if (newPiece==2)
-						this.name=Type.ROOK;
-					else if (newPiece==3)
-						this.name=Type.BISHOP;
-					else if (newPiece==4)
-						this.name=Type.KNIGHT;
-				}
+					this.name=Type.QUEEN;
 			}
 			else
 			{
 				if(this.getY()==0)
-				{
-					System.out.println("Please enter a number: 1 = Queen, 2 = Rook, 3 = Bishop, 4 = Knight");
-					int newPiece= sc.nextInt();
-					if (newPiece==1)
-						this.name=Type.QUEEN;
-					else if (newPiece==2)
-						this.name=Type.ROOK;
-					else if (newPiece==3)
-						this.name=Type.BISHOP;
-					else if (newPiece==4)
-						this.name=Type.KNIGHT;
-				}
+					this.name=Type.QUEEN;
 			}
 		}
 	}
