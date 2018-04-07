@@ -124,25 +124,38 @@ public class Piece {
 				moves.add((i * SIZE)  + this.getX());
 			break;
 		case BISHOP:
-			for(i= 1; i <= 7; i++)
-			{
-				if (this.getX()-i >= 0 && this.getY() - i >= 0)
-				{
-					moves.add((this.getX()-i)+(8*(this.getY()-i)));
-				}
-				if (this.getX()+i < 8 && this.getY() - i >= 0)
-				{
-					moves.add((this.getX()+i)+(8*(this.getY()-i)));
-				}
-				if (this.getX()-i >= 0 && this.getY() + i < 8)
-				{
-					moves.add((this.getX()-i)+(8*(this.getY()+i)));
-				}
-				if (this.getX()+i < 8 && this.getY() + i < 8)
-				{
-					moves.add((this.getX()+i)+(8*(this.getY()+i)));
-				}
-			}
+			i = 0;
+			
+			while((this.getX() + ++i) < SIZE && i + this.getY() < SIZE && (board[this.getX() + i][this.getY() + i] == null))
+				moves.add(this.getX() + i + SIZE * (this.getY() + i));
+			
+			if((this.getX() + i) < SIZE && i + this.getY() < SIZE && board[this.getX() + i][this.getY() + i].getColor() != this.getColor())
+				moves.add(this.getX() + i + SIZE * (this.getY() + i));
+			
+			i = 0;
+			
+			while((this.getX() + ++i) < SIZE && this.getY() - i >= 0 && (board[this.getX() + i][this.getY() - i] == null))
+				moves.add(this.getX() + i + SIZE * (this.getY() - i));
+			
+			if((this.getX() + i) < SIZE && this.getY() - i >= 0 && board[this.getX() + i][this.getY() - i].getColor() != this.getColor())
+				moves.add(this.getX() + i + SIZE * (this.getY()- i));
+			
+			i = 0;
+			
+			while((this.getX() - ++i) >= 0 && (i + this.getY()) < SIZE && (board[this.getX() - i][this.getY() + i] == null))
+				moves.add(this.getX() - i + SIZE * (this.getY() + i));
+			
+			if((this.getX() - i) >= 0 && (i + this.getY()) < SIZE && board[this.getX() - i][this.getY() + i].getColor() != this.getColor())
+				moves.add(this.getX() - i + SIZE * (this.getY() + i));
+			
+			i = 0;
+			
+			while(this.getX() - ++i >= 0 && this.getY() - i >= 0 && (board[this.getX() - i][this.getY() - i] == null))
+				moves.add(this.getX() - i + SIZE * (this.getY() - i));
+			
+			if((this.getX() - i) >= 0 && this.getY() - i >= 0 && board[this.getX() - i][this.getY() - i].getColor() != this.getColor())
+				moves.add(this.getX() - i + SIZE * (this.getY() - i));
+
 			break;
 		case KNIGHT:
 			for(int x_change=1; x_change <= 2; x_change++)
@@ -170,34 +183,74 @@ public class Piece {
 			}
 			break;
 		case QUEEN:
-			for(i = 0; i <= 7; i++)
-			{
-				if (this.getX() != i)
-					moves.add(i+(8*this.getY()));
-				if (this.getY() != i)
-					moves.add(this.getX()+(8*i));
-			}
+			//Get horizontal moves
+			i = this.getX();
 
-			for(i= 1; i <= 7; i++)
-			{
-				if (this.getX()-i >= 0 && this.getY() - i >= 0)
-				{
-					moves.add((this.getX()-i)+(8*(this.getY()-i)));
-				}
-				if (this.getX()+i < 8 && this.getY() - i >= 0)
-				{
-					moves.add((this.getX()+i)+(8*(this.getY()-i)));
-				}
-				if (this.getX()-i >= 0 && this.getY() + i < 8)
-				{
-					moves.add((this.getX()-i)+(8*(this.getY()+i)));
-				}
-				if (this.getX()+i < 8 && this.getY() + i < 8)
-				{
-					moves.add((this.getX()+i)+(8*(this.getY()+i)));
-				}
-			}
+			while( ++i < SIZE && (board[i][this.getY()] == null))
+				moves.add(i + (SIZE * this.getY()));
+
+			if(i < SIZE && board[i][this.getY()].getColor() != this.getColor())
+				moves.add(i + SIZE * this.getY());
+
+			i = this.getX();
+
+			while( --i >= 0 && (board[i][this.getY()] == null))
+				moves.add(i + SIZE * this.getY());
+
+			if(i >= 0 && board[i][this.getY()].getColor() != this.getColor())
+				moves.add(i + SIZE *this.getY());
+
+			//Get vertical moves
+			i = this.getY();
+
+			while(++i < SIZE && (board[this.getX()][i]) == null)
+				moves.add(i * SIZE + this.getX());
+
+			if(i < SIZE && board[this.getX()][i].getColor() != this.getColor())
+				moves.add(i * SIZE + this.getX());
+
+			i = this.getY();
+
+			while(--i >= 0 && (board[this.getX()][i]) == null)
+				moves.add(i * SIZE + this.getX());
+
+			if(i >= 0 && board[this.getX()][i].getColor() != this.getColor())
+				moves.add((i * SIZE)  + this.getX());
+			//Diagonal moves
+			i = 0;
+			
+			while((this.getX() + ++i) < SIZE && i + this.getY() < SIZE && (board[this.getX() + i][this.getY() + i] == null))
+				moves.add(this.getX() + i + SIZE * (this.getY() + i));
+			
+			if((this.getX() + i) < SIZE && i + this.getY() < SIZE && board[this.getX() + i][this.getY() + i].getColor() != this.getColor())
+				moves.add(this.getX() + i + SIZE * (this.getY() + i));
+			
+			i = 0;
+			
+			while((this.getX() + ++i) < SIZE && this.getY() - i >= 0 && (board[this.getX() + i][this.getY() - i] == null))
+				moves.add(this.getX() + i + SIZE * (this.getY() - i));
+			
+			if((this.getX() + i) < SIZE && this.getY() - i >= 0 && board[this.getX() + i][this.getY() - i].getColor() != this.getColor())
+				moves.add(this.getX() + i + SIZE * (this.getY()- i));
+			
+			i = 0;
+			
+			while((this.getX() - ++i) >= 0 && (i + this.getY()) < SIZE && (board[this.getX() - i][this.getY() + i] == null))
+				moves.add(this.getX() - i + SIZE * (this.getY() + i));
+			
+			if((this.getX() - i) >= 0 && (i + this.getY()) < SIZE && board[this.getX() - i][this.getY() + i].getColor() != this.getColor())
+				moves.add(this.getX() - i + SIZE * (this.getY() + i));
+			
+			i = 0;
+			
+			while(this.getX() - ++i >= 0 && this.getY() - i >= 0 && (board[this.getX() - i][this.getY() - i] == null))
+				moves.add(this.getX() - i + SIZE * (this.getY() - i));
+			
+			if((this.getX() - i) >= 0 && this.getY() - i >= 0 && board[this.getX() - i][this.getY() - i].getColor() != this.getColor())
+				moves.add(this.getX() - i + SIZE * (this.getY() - i));
+
 			break;
+			
 		case KING:
 			for(i= -1; i<=1;i++)
 			{
@@ -237,14 +290,18 @@ public class Piece {
 		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 28);
 		Piece ourKnight = new Piece(Type.KING, Color.WHITE, 28);
 		Piece ourRook = new Piece(Type.ROOK, Color.WHITE, 28);
+		Piece ourBishop = new Piece(Type.BISHOP, Color.WHITE, 28);
 
-		Piece additionalRook = new Piece(Type.ROOK, Color.WHITE, 20);
+		//Piece additionalRook = new Piece(Type.ROOK, Color.WHITE, 20);
 		List <Integer> rookList = ourRook.getMoves();
-		List <Integer> list = ourQueen.getMoves();
-		List <Integer> kList = ourKnight.getMoves();
-		Collections.sort(kList);
-		System.out.println("Knight moves:"+kList);
+		List <Integer> bishopList = ourBishop.getMoves();
+		List <Integer> queenList = ourQueen.getMoves();
+		List <Integer> knightList = ourKnight.getMoves();
+		Collections.sort(knightList);
+		System.out.println("Queen moves: " + queenList);
+		System.out.println("Knight moves:" + knightList);
 		System.out.println("Rook moves: " + rookList);
+		System.out.println("Bishop moves: " + bishopList);
 
 		for(int i=0; i<8; i++) {
 			System.out.print("[");
