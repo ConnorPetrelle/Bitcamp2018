@@ -1,4 +1,4 @@
-package bitcamp2018;
+//package bitcamp2018;
 
 import java.util.*;
 import java.lang.Object;
@@ -76,23 +76,47 @@ public class Piece {
 	//all need check for if a space is occupied
 	public List<Integer> getMoves() {
 		List<Integer> moves = new ArrayList<Integer>();
-
-
-
+		int i;
 		switch(this.getName()) {
 		case PAWN:
-			break;
+		break;
 		case ROOK:
-			for(int i = 0; i <= 7; i++)
-			{
-				if (this.getX() != i)
-					moves.add(i+(8*this.getY()));
-				if (this.getY() != i)
-					moves.add(this.getX()+(8*i));
-			}
-			break;
+			//Get horizontal moves
+			i = this.getX();
+
+			while( ++i < SIZE && (board[i][this.getY()] == null))
+				moves.add(i + (SIZE * this.getY()));
+
+			if(i < SIZE && board[i][this.getY()].getColor() != this.getColor())
+				moves.add(i + SIZE * this.getY());
+
+			i = this.getX();
+
+			while( --i >= 0 && (board[i][this.getY()] == null))
+				moves.add(i + SIZE * this.getY());
+
+			if(i >= 0 && board[i][this.getY()].getColor() != this.getColor())
+				moves.add(i + SIZE *this.getY());
+
+			//Get vertical moves
+			i = this.getY();
+
+			while(++i < SIZE && (board[this.getX()][i]) == null)
+				moves.add(i * SIZE + this.getX());
+
+			if(i < SIZE && board[this.getX()][i].getColor() != this.getColor())
+				moves.add(i * SIZE + this.getX());
+
+			i = this.getY();
+
+			while(--i >= 0 && (board[this.getX()][i]) == null)
+				moves.add(i * SIZE + this.getX());
+
+			if(i >= 0 && board[this.getX()][i].getColor() != this.getColor())
+				moves.add((i * SIZE)  + this.getX());
+		break;
 		case BISHOP:
-			for(int i= 1; i <= 7; i++)
+			for(i= 1; i <= 7; i++)
 			{
 				if (this.getX()-i >= 0 && this.getY() - i >= 0)
 				{
@@ -138,7 +162,7 @@ public class Piece {
 			}
 			break;
 		case QUEEN:
-			for(int i = 0; i <= 7; i++)
+			for(i = 0; i <= 7; i++)
 			{
 				if (this.getX() != i)
 					moves.add(i+(8*this.getY()));
@@ -146,7 +170,7 @@ public class Piece {
 					moves.add(this.getX()+(8*i));
 			}
 
-			for(int i= 1; i <= 7; i++)
+			for(i= 1; i <= 7; i++)
 			{
 				if (this.getX()-i >= 0 && this.getY() - i >= 0)
 				{
@@ -167,7 +191,7 @@ public class Piece {
 			}
 			break;
 		case KING:
-			for(int i= -1; i<=1;i++)
+			for(i= -1; i<=1;i++)
 			{
 				for(int j= -1; j<=1; j++)
 				{
@@ -195,12 +219,19 @@ public class Piece {
 	 */
 
 	public static void main(String[] args) {
-		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 63);
+
+		init_board(true, new Piece[8][8]);
+		Piece ourQueen = new Piece(Type.QUEEN, Color.WHITE, 28);
 		Piece ourKnight = new Piece(Type.KING, Color.WHITE, 28);
+		Piece ourRook = new Piece(Type.ROOK, Color.WHITE, 28);
+
+		Piece additionalRook = new Piece(Type.ROOK, Color.WHITE, 20);
+		List <Integer> rookList = ourRook.getMoves();
 		List <Integer> list = ourQueen.getMoves();
 		List <Integer> kList = ourKnight.getMoves();
 		Collections.sort(kList);
 		System.out.println("Knight moves:"+kList);
+		System.out.println("Rook moves: " + rookList);
 
 		for(int i=0; i<8; i++) {
 			System.out.print("[");
@@ -209,5 +240,12 @@ public class Piece {
 			}
 			System.out.println("]\n");
 		}
+
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				System.out.println(board[i][j]);
+			}
+		}
+		System.out.println(board);
 	}
 }
