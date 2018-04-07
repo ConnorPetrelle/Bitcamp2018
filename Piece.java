@@ -6,15 +6,21 @@ import java.lang.IllegalArgumentException;
 final int SIZE = 8;
 public class Piece {
 
+
   enum Type {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;
   }
 
-  private String name, color;
-  private Boolean is_removed;
-  private int x_coord, y_coord;
+  enum Color {
+    WHITE, BLACK;
+  }
 
-  public Piece(Type name, String color, int pos) {
+  private Type name;
+  private Color color;
+  private Boolean is_removed;
+  private int position;
+
+  public Piece(Type name, Color color, int pos) {
 
     if(x < 0 || x > 7 || y < 0 || y > 7) {
       throw new IllegalArgumentException("invalid coordinates");
@@ -23,7 +29,7 @@ public class Piece {
     this.name = name;
     this.color = color;
     this.position = pos;
-    this.is_removed = false;
+    this.isRemoved = false;
 
     public int getX() {
       return this.position % SIZE;
@@ -33,7 +39,7 @@ public class Piece {
       return this.position / SIZE;
     }
 
-    public int getPos() {
+    public int getPosition() {
       return this.position;
     }
 
@@ -41,8 +47,12 @@ public class Piece {
       return this.name;
     }
 
-    public Boolean isPresent() {
-      return !this.is_removed
+    public Boolean isRemoved() {
+      return this.isRemoved
+    }
+
+    public Color getColor() {
+      return this.color;
     }
 
   }
